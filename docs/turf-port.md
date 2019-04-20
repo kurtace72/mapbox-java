@@ -58,7 +58,7 @@ Below's an on going list of the Turf functions which currently exist inside the 
 - [ ] turf-voronoi
 
 ## Feature Conversion
-- [ ] turf-combine
+- [x] turf-combine
 - [ ] turf-explode
 - [ ] turf-flatten
 - [ ] turf-line-to-polygon
