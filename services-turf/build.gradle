@@ -10,3 +10,5 @@ dependencies {
   // Annotations
   compileOnly dependenciesList.supportAnnotation
 }
+
+apply from: "${rootDir}/gradle/gradle-bintray.gradle"

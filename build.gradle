@@ -3,6 +3,7 @@ buildscript {
 
   repositories {
     maven { url 'https://plugins.gradle.org/m2' }
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' }
     google()
     mavenCentral()
     jcenter()
@@ -17,6 +18,10 @@ buildscript {
     classpath pluginDependencies.errorprone
     classpath pluginDependencies.buildConfig
     classpath pluginDependencies.jacoco
+
+    // These plugins are for publishing to Bintray
+    classpath pluginDependencies.bintray
+    classpath pluginDependencies.maven
   }
 }
 
@@ -31,9 +36,9 @@ allprojects {
     google()
     mavenCentral()
     jcenter()
+    // For publishing to Bintray
+    maven { url 'https://mapbox.bintray.com/mapbox' }
   }
-  group = GROUP
-  version = VERSION_NAME
 }
 
 subprojects {
@@ -97,7 +102,8 @@ subprojects { subproject ->
   }
 
   if (RELEASE_MODULES.contains(subproject.name)) {
-    subproject.apply from: "${rootDir}/gradle/mvn-push.gradle"
+    subproject.apply from: "${rootDir}/gradle/artifact-settings.gradle"
+    subproject.apply from: "${rootDir}/gradle/gradle-bintray.gradle"
     subproject.apply from: "${rootDir}/gradle/dependencies-graph.gradle"
   }
 }

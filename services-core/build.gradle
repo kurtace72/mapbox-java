@@ -52,3 +52,5 @@ dependencies {
   // Test Dependencies
   testOutput sourceSets.test.output
 }
+
+apply from: "${rootDir}/gradle/gradle-bintray.gradle"

@@ -28,17 +28,24 @@ javadoc:
 	./gradlew :services:javadoc; mv services/build/docs/javadoc/ ./documentation/services/javadoc/ ; \
 
 publish:
-	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-core:uploadArchives ; \
-	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-geojson:uploadArchives ; \
-	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services:uploadArchives ; \
-	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-turf:uploadArchives ; \
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-core:bintrayUpload ; \
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-geojson:bintrayUpload ; \
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services:bintrayUpload ; \
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-turf:bintrayUpload ; \
+
+publish-snapshot:
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-core:artifactoryPublish ; \
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-geojson:artifactoryPublish ; \
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services:artifactoryPublish ; \
+	export IS_LOCAL_DEVELOPMENT=false; ./gradlew :services-turf:artifactoryPublish ; \
+
 
 publish-local:
 	# This publishes to ~/.m2/repository/com/mapbox/mapboxsdk
-	export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services-core:uploadArchives ; \
-    export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services-geojson:uploadArchives ; \
-    export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services:uploadArchives ; \
-    export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services-turf:uploadArchives ; \
+	export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services-core: bintrayUpload ; \
+    export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services-geojson: bintrayUpload ; \
+    export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services: bintrayUpload ; \
+    export IS_LOCAL_DEVELOPMENT=true; ./gradlew :services-turf: bintrayUpload ; \
 
 graphs:
 	./gradlew :services-core:generateDependencyGraphMapboxLibraries

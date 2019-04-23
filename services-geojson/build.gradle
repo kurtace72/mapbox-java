@@ -15,3 +15,5 @@ dependencies {
   testImplementation dependenciesList.okhttp3Mockwebserver
   testImplementation project(path: ':services-core', configuration: 'testOutput')
 }
+
+apply from: "${rootDir}/gradle/gradle-bintray.gradle"
