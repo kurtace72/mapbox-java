@@ -410,4 +410,17 @@ public class TurfMeasurementTest extends TestUtils {
     assertEquals(0, polygonRepresentingBoundingBox.inner().size());
     assertEquals(5, polygonRepresentingBoundingBox.coordinates().get(0).size());
   }
+
+  @Test
+  public void square(){
+    BoundingBox bbox1 =  BoundingBox.fromCoordinates(0, 0, 5, 10);
+    BoundingBox bbox2 = BoundingBox.fromCoordinates(0, 0, 10, 5);
+
+    BoundingBox sq1 = TurfMeasurement.square(bbox1);
+    BoundingBox sq2 = TurfMeasurement.square(bbox2);
+
+    assertEquals(BoundingBox.fromCoordinates(-2.5, 0, 7.5, 10), sq1);
+    assertEquals(BoundingBox.fromCoordinates(0, -2.5, 10, 7.5), sq2);
+  }
+
 }

@@ -439,4 +439,40 @@ public final class TurfMeasurement {
                 Point.fromLngLat(boundingBox.west(), boundingBox.north()),
                 Point.fromLngLat(boundingBox.west(), boundingBox.south()))));
   }
+
+
+  /**
+   * Takes a bounding box and calculates the minimum square bounding box that would contain the input.
+   *
+   * @param boundingBox extent in west, south, east, north order
+   * @return a square surrounding bbox
+   */
+  public static BoundingBox square(@NonNull BoundingBox boundingBox) {
+    double horizontalDistance = distance(
+            Point.fromLngLat(boundingBox.west(), boundingBox.south()),
+            Point.fromLngLat(boundingBox.east(), boundingBox.south())
+    );
+    double verticalDistance = distance(
+            Point.fromLngLat(boundingBox.west(), boundingBox.south()),
+            Point.fromLngLat(boundingBox.west(), boundingBox.north())
+    );
+
+    if (horizontalDistance >= verticalDistance) {
+      double verticalMidpoint = (boundingBox.south() + boundingBox.north()) / 2;
+      return BoundingBox.fromCoordinates(
+              boundingBox.west(),
+              verticalMidpoint - ((boundingBox.east() - boundingBox.west()) / 2),
+              boundingBox.east(),
+              verticalMidpoint + ((boundingBox.east() - boundingBox.west()) / 2)
+      );
+    } else {
+      double horizontalMidpoint = (boundingBox.west() + boundingBox.east()) / 2;
+      return BoundingBox.fromCoordinates(
+      horizontalMidpoint - ((boundingBox.north() - boundingBox.south()) / 2),
+              boundingBox.south(),
+              horizontalMidpoint + ((boundingBox.north() - boundingBox.south()) / 2),
+              boundingBox.north()
+      );
+    }
+  }
 }
