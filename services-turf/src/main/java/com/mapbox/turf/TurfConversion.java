@@ -191,27 +191,12 @@ public final class TurfConversion {
   public static Geometry combine(@NonNull FeatureCollection featureCollection) {
     Geometry firstFeatureGeometry = featureCollection.features().get(0).geometry();
     if (firstFeatureGeometry instanceof Point) {
-      List<Point> pointList = new ArrayList<>();
-      for (Feature singleFeature : featureCollection.features()) {
-        if (singleFeature.geometry() instanceof Point) {
-          pointList.add(TurfMeta.getCoord(singleFeature));
-        } else {
-          throw new TurfException("Your FeatureCollection must be of all of "
-              + "the same geometry type.");
-        }
-      }
-      return MultiPoint.fromLngLats(pointList);
+      return MultiPoint.fromLngLats(listOfPoints(featureCollection));
     } else if (firstFeatureGeometry instanceof LineString) {
-      List<LineString> lineStringList = new ArrayList<>();
-      for (Feature singleFeature : featureCollection.features()) {
-        if (singleFeature.geometry() instanceof LineString) {
-          lineStringList.add((LineString) singleFeature.geometry());
-        } else {
-          throw new TurfException("Your FeatureCollection must be of all of "
-              + "the same geometry type.");
-        }
-      }
-      return MultiLineString.fromLineStrings(lineStringList);
+      List<Point> pointList = new ArrayList<>();
+      pointList.addAll(listOfPoints(featureCollection));
+      return MultiLineString.fromLngLats(listOfPoints(featureCollection));
+
     } else if (firstFeatureGeometry instanceof Polygon) {
       List<Polygon> polygonList = new ArrayList<>();
       for (Feature singleFeature : featureCollection.features()) {
@@ -228,5 +213,18 @@ public final class TurfConversion {
         + "a Point, LineString, or Polygon geometry type. Please pass in "
         + "a FeatureCollection with two or more Features which are all of "
         + "the same geometry type.");
+  }
+
+  private static <G> List<Point>  listOfPoints(FeatureCollection featureCollection) {
+    List<G> pointList = new ArrayList<>();
+    for (Feature singleFeature : featureCollection.features()) {
+      if (singleFeature.geometry() instanceof G) {
+        pointList.add((G) singleFeature.geometry());
+      } else {
+        throw new TurfException("Your FeatureCollection must be of all of "
+            + "the same geometry type.");
+      }
+    }
+    return pointList;
   }
 }
