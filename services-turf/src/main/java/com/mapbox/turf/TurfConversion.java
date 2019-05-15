@@ -186,6 +186,7 @@ public final class TurfConversion {
    *                          or {@link Polygon} geometries.
    * @return a Geometry which can be used to cast {@link MultiPoint},
    * {@link MultiLineString}, or {@link MultiPolygon}
+   *
    * @since 4.8.0
    */
   public static Geometry combine(@NonNull FeatureCollection featureCollection) {
